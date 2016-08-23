@@ -6,7 +6,7 @@ int main()
 {
 
     std::complex<double> a;
-    TimeSignal e;
+    TimeSignal e,c;
 
     for (int i=0; i<e.getN(); i++)
     {
@@ -17,10 +17,21 @@ int main()
     std::cout << std::endl;
 
     //SystemBlock
-    double num[]={1,0};
-    SystemBlock control;
+    //numerator parameters
+    double nume[]={1,0};
+    std::vector<double> num(nume[0],nume[1]);
 
-    control.SignalParams(e);
+    //denominator parameters
+    double deno[]={1,0};
+    std::vector<double> den(deno[0],deno[1]);
+
+    //instantiate object
+    SystemBlock control(num,den);
+
+    //configure for the input signal
+    control.TimeResponse(e,c);
+
+
 
 
     return 0;
