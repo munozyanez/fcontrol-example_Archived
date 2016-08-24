@@ -18,11 +18,11 @@ int main()
 
     //SystemBlock
     //numerator parameters
-    double nume[]={1,0};
+    double nume[]={0,1};
     std::vector<double> num(nume[0],nume[1]);
 
     //denominator parameters
-    double deno[]={1,0};
+    double deno[]={0,1};
     std::vector<double> den(deno[0],deno[1]);
 
     //instantiate object
