@@ -15,7 +15,7 @@ INCLUDE_DIRECTORIES(${FCONTROL_INCLUDE_DIRS})
 add_executable(${PROJECT_NAME} ${SRC_LIST})
 
 #link with libs
-target_link_libraries( ${PROJECT_NAME} ${FCONTROL_LIBRARIES})
+target_link_libraries( ${PROJECT_NAME} fcontrol)
 
 
 ##functions
