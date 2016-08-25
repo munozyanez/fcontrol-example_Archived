@@ -14,12 +14,11 @@ int main()
         //std::cout << e.data[i];
 
     }
-    std::cout << std::endl;
 
     //SystemBlock
     //numerator parameters    
     std::vector<double> num(2,0);
-    num[0]=1;
+    num[0]=0.5;
     //denominator parameters
     std::vector<double> den(2,0);
     den[0]=1;
@@ -42,28 +41,27 @@ int main()
     //control a fake motor
     double fmPos=0;
     double fmTarget=100;
+    double actualError,actualControl;
 
-    for (int i=0; i<e.data.size(); i++)
+
+    for (int i=0; i<e.getN(); i++)
     {
-        e.data[i]=fmTarget-fmPos;
-    }
-    control.TimeResponse(e,c);
+        e.data[i]=0;
+        //std::cout << e.data[i];
 
-    for (int h=0; h<12; h++)
-    {
-        for (int i=0; i<e.data.size(); i++)
-        {
-            fmPos+=c.data[i]*0.01;
-            e.data[i]=fmTarget-fmPos;
-
-        }
-        for (int i=0; i<e.data.size(); i++)
-        {
-        }
-        control.TimeResponse(e,c);
     }
 
-    std::cout << fmPos << std::endl;
+    for (int h=0; h<10; h++)
+    {
+        actualError=fmTarget-fmPos;
+        actualControl=control.TimeResponseUpdate(e,actualError);
+        fmPos+=actualControl;
+        e.data.erase(e.data.begin());
+        e.data.push_back(actualError);
+        std::cout << fmPos << std::endl;
+
+    }
+
 
 
     return 0;
