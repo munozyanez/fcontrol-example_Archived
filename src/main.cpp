@@ -64,5 +64,7 @@ int main()
 
 
 
+    ControllerBlock newcontrol;
+
     return 0;
 }
