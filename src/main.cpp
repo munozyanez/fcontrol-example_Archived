@@ -64,11 +64,26 @@ int main()
 
 
 
-    ControllerBlock newcontrol;
-    double numH[]={1,0};
-    double denH[]={1,0};
 
-    TransferFunction H(sizeof(numH)/sizeof(numH[0]), sizeof(numH)/sizeof(numH[0]), numH, denH );
+    std::vector<double> numH = {1,0};
+    std::vector<double> denH = {1,1};
+
+    TransferFunction H(numH, denH );
+
+    ControllerBlock newcontrol(H);
+
+
+    //control a fake motor
+    fmPos=0;
+    fmTarget=100;
+
+    for (int h=0; h<10; h++)
+    {
+        actualError=fmTarget-fmPos;
+        fmPos+=newcontrol.ControlSignal(actualError);
+        std::cout << fmPos << std::endl;
+
+    }
 
     return 0;
 }
