@@ -65,6 +65,10 @@ int main()
 
 
     ControllerBlock newcontrol;
+    double numH[]={1,0};
+    double denH[]={1,0};
+
+    TransferFunction H(sizeof(numH)/sizeof(numH[0]), sizeof(numH)/sizeof(numH[0]), numH, denH );
 
     return 0;
 }
