@@ -1,20 +1,23 @@
 #include <complex>
 
 #include "fcontrol.h"
+#include <math.h>
 
 int main()
 {
 
     std::complex<double> a;
     TimeSignal e,c;
+    TimeSignal Gc(100,10);
 
-    for (int i=0; i<e.getN(); i++)
+    for (int i=0; i<Gc.getN(); i++)
     {
-        e.data[i]=sin(0.1*i*e.getDts());
-        //std::cout << e.data[i];
+        double time=i*e.getDts();
+        Gc.data[i]=exp(time)-(time*exp(time));
+        std::cout << Gc.data[i] << ",";
 
     }
-
+    std::cout << std::endl;
     //SystemBlock
     //numerator parameters    
     std::vector<double> num(2,0);
