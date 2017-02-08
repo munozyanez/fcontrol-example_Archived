@@ -10,27 +10,37 @@ int main()
     TimeSignal e,c;
     TimeSignal Gc(100,10);
 
-    for (int i=0; i<Gc.getN(); i++)
+    for (int i=0; i<e.getN(); i++)
     {
-        double time=i*e.getDts();
-        Gc.data[i]=exp(time)-(time*exp(time));
-        std::cout << Gc.data[i] << ",";
+        //double time=i*e.getDts();
+        e.data[i]=0;
+        //std::cout << e.data[i] << ",";
 
     }
+
+    for (int i=0; i<Gc.getN(); i++)
+    {
+        //double time=i*e.getDts();
+        Gc.data[i]=pow(-1,i)*3;
+        //std::cout << Gc.data[i] << ",";
+
+    }
+    Gc.data[0]=11;
+    Gc.data[1]=0;
     std::cout << std::endl;
     //SystemBlock
     //numerator parameters    
-    std::vector<double> num(2,0);
-    num[0]=0.5;
+    std::vector<double> num(3,0);
+    num[0]=3.0;num[1]=-11.0;num[2]=11.0;
     //denominator parameters
-    std::vector<double> den(2,0);
-    den[0]=1;
+    std::vector<double> den(3,0);
+    den[0]=0.0;den[1]=-1.0;den[2]=1.0;
 
     //instantiate object
     SystemBlock control(num,den);
 
     //convolve input signal and system
-    control.TimeResponse(e,c);
+    //control.TimeResponse(e,c);
 
 
 
@@ -57,7 +67,7 @@ int main()
     for (int h=0; h<10; h++)
     {
         actualError=fmTarget-fmPos;
-        actualControl=control.TimeResponseUpdate(e,actualError);
+        actualControl=control.OutputUpdate(e,actualError);
         fmPos+=actualControl;
         e.data.erase(e.data.begin());
         e.data.push_back(actualError);
@@ -66,7 +76,7 @@ int main()
     }
 
 
-
+/*
 
     std::vector<double> numH = {1,0};
     std::vector<double> denH = {1,1};
@@ -87,6 +97,6 @@ int main()
         std::cout << fmPos << std::endl;
 
     }
-
+*/
     return 0;
 }
