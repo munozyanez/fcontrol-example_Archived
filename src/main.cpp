@@ -28,21 +28,43 @@ int main()
     Gc.data[0]=11;
     Gc.data[1]=0;
     std::cout << std::endl;
-    //SystemBlock
+
+    double Ts=0.001;
+
+    //SystemBlock controller
     //numerator parameters    
     std::vector<double> num(3,0);
-    num[0]=3.0;num[1]=-11.0;num[2]=11.0;
+    num[2]=(3*Ts*Ts+10*Ts+12);
+    num[1]=(6*Ts*Ts-24);
+    num[0]=3*Ts*Ts-10*Ts+12;
+
     //denominator parameters
     std::vector<double> den(3,0);
-    den[0]=0.0;den[1]=-1.0;den[2]=1.0;
+    den[2]=2*Ts;
+    den[1]=0.0;
+    den[0]=-2*Ts;
+
 
     //instantiate object
     SystemBlock control(num,den);
 
-    //convolve input signal and system
-    //control.TimeResponse(e,c);
 
+    //SystemBlock Motor
+    //numerator parameters
+    //std::vector<double> num(3,0);
+    num[2]=5*Ts*Ts;
+    num[1]=10*Ts*Ts;
+    num[0]=5*Ts*Ts;
+    //denominator parameters
+    //std::vector<double> den(3,0);
+    den[2]=(10*Ts+2);
+    den[1]=-4;
+    den[0]=-10*Ts+2;
 
+    //instantiate object
+    SystemBlock motor(num,den);
+
+    //std::vector<double> motorStates(den.size(),0);
 
     for (int i=0; i<c.getN(); i++)
     {
@@ -52,8 +74,9 @@ int main()
     }
 
     //control a fake motor
-    double fmPos=0;
-    double fmTarget=100;
+    double fmPos;
+    std::vector<double> motorStates(1,0);
+    double fmTarget=10;
     double actualError,actualControl;
 
 
@@ -66,12 +89,15 @@ int main()
 
     for (int h=0; h<10; h++)
     {
+        fmPos=motorStates.back();
+        std::cout << "error: " << actualError << ", fmPos: " << fmPos << std::endl;
+
         actualError=fmTarget-fmPos;
-        actualControl=control.OutputUpdate(e,actualError);
-        fmPos+=actualControl;
-        e.data.erase(e.data.begin());
-        e.data.push_back(actualError);
-        std::cout << fmPos << std::endl;
+        actualControl=control.OutputUpdate(actualError);
+        fmPos+=motor.OutputUpdate(actualControl);
+        motorStates.push_back(fmPos);
+        //e.data.erase(e.data.begin());
+        //e.data.push_back(actualError);
 
     }
 
