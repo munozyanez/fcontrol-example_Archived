@@ -74,7 +74,7 @@ int main()
     }
 
     //control a fake motor
-    double fmPos;
+    double fmPos,dPos;
     std::vector<double> motorStates(1,0);
     double fmTarget=10;
     double actualError,actualControl;
@@ -90,11 +90,15 @@ int main()
     for (int h=0; h<10; h++)
     {
         fmPos=motorStates.back();
+        actualError=fmTarget-fmPos;
         std::cout << "error: " << actualError << ", fmPos: " << fmPos << std::endl;
 
-        actualError=fmTarget-fmPos;
         actualControl=control.OutputUpdate(actualError);
-        fmPos+=motor.OutputUpdate(actualControl);
+        dPos=motor.OutputUpdate(actualControl);
+        fmPos+=dPos;
+
+        std::cout << "actualControl: " << actualControl << ", dPos: " << dPos << std::endl;
+
         motorStates.push_back(fmPos);
         //e.data.erase(e.data.begin());
         //e.data.push_back(actualError);
