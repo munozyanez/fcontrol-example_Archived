@@ -89,7 +89,7 @@ int main()
 
     for (int h=0; h<10; h++)
     {
-        fmPos=motorStates.back();
+       /* fmPos=motorStates.back();
         actualError=fmTarget-fmPos;
         std::cout << "error: " << actualError << ", fmPos: " << fmPos << std::endl;
 
@@ -98,10 +98,13 @@ int main()
         fmPos+=dPos;
 
         std::cout << "actualControl: " << actualControl << ", dPos: " << dPos << std::endl;
-
-        motorStates.push_back(fmPos);
+        motorStates.push_back(fmPos);*/
         //e.data.erase(e.data.begin());
         //e.data.push_back(actualError);
+
+        std::cout << "motor: " << motor.OutputUpdate(10) << std::endl;
+
+
 
     }
 
