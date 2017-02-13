@@ -32,31 +32,48 @@ int main()
     double Ts=0.01;
 
     //SystemBlock controller
-    //numerator parameters    
-    std::vector<double> num(3,0);
-    num[2]=(3*Ts*Ts+10*Ts+12);
-    num[1]=(6*Ts*Ts-24);
-    num[0]=3*Ts*Ts-10*Ts+12;
+    //numerator parameters
+
+    std::vector<double> numCon(2,0);
+     numCon[1]=(3*Ts+10);
+     numCon[0]=(3*Ts-10);
+     //numCon[0]=3*Ts*Ts-10*Ts+12;
+
+     //denominator parameters
+     std::vector<double> denCon(2,0);
+     denCon[1]=2.0;
+     denCon[0]=-2.0;
+     //denCon[0]=-2*Ts;
+  /*
+   std::vector<double> numCon(3,0);
+    numCon[2]=(3*Ts*Ts+10*Ts+12);
+    numCon[1]=(6*Ts*Ts-24);
+    numCon[0]=3*Ts*Ts-10*Ts+12;
 
     //denominator parameters
-    std::vector<double> den(3,0);
-    den[2]=2*Ts;
-    den[1]=0.0;
-    den[0]=-2*Ts;
+    std::vector<double> denCon(3,0);
+    denCon[2]=2*Ts;
+    denCon[1]=0.0;
+    denCon[0]=-2*Ts;
 
+    std::vector<double> numCon(1,0);
+    numCon[0]=5;
+    std::vector<double> denCon(1,0);
+    denCon[0]=1;
+ */
 
     //instantiate object
-    SystemBlock control(num,den);
+    SystemBlock control(numCon,denCon);
 
 
     //SystemBlock Motor
     //numerator parameters
-    //std::vector<double> num(3,0);
+    std::vector<double> num(3,0);
     num[2]=5*Ts*Ts;
     num[1]=10*Ts*Ts;
     num[0]=5*Ts*Ts;
     //denominator parameters
-    //std::vector<double> den(3,0);
+    std::vector<double> den(3,0);
     den[2]=(10*Ts+2);
     den[1]=-4;
     den[0]=-10*Ts+2;
@@ -87,26 +104,28 @@ int main()
 
     }
 
-    for (int h=0; h<10; h++)
+    do
+    //for(int i=0;i<110;i++)
     {
-        fmPos=motorStates.back();
-        actualError=fmTarget-fmPos;
+        //fmPos=motorStates.back();
+       actualError=fmTarget-fmPos;
         //std::cout << "error: " << actualError << ", fmPos: " << fmPos << std::endl;
 
         actualControl=control.OutputUpdate(actualError);
-        dPos=motor.OutputUpdate(actualControl);
-        fmPos+=dPos;
+        fmPos=motor.OutputUpdate(actualControl);
+        //fmPos+=dPos;
 
         //std::cout << "actualControl: " << actualControl << ", dPos: " << dPos << std::endl;
-        motorStates.push_back(fmPos);
+        //motorStates.push_back(fmPos);
         //e.data.erase(e.data.begin());
         //e.data.push_back(actualError);
 
         std::cout << "fmPos: " << fmPos << std::endl;
+ /*
+        std::cout << "motor.OutputUpdate: " << motor.OutputUpdate(fmTarget) << std::endl;
+*/
 
-
-
-    }
+    }while(actualError>0.1);
 
 
 /*
