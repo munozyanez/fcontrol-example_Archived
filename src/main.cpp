@@ -3,6 +3,8 @@
 #include "fcontrol.h"
 #include <math.h>
 
+#include <plotter.h>
+
 int main()
 {
 
@@ -34,17 +36,19 @@ int main()
     //SystemBlock controller
     //numerator parameters
 
-    std::vector<double> numCon(2,0);
-     numCon[1]=(3*Ts+10);
-     numCon[0]=(3*Ts-10);
+  /*   std::vector<double> numCon(2,0);
+     numCon[1]=-(2*Ts+2);
+     numCon[0]=-2*Ts+2;
      //numCon[0]=3*Ts*Ts-10*Ts+12;
 
      //denominator parameters
      std::vector<double> denCon(2,0);
-     denCon[1]=2.0;
-     denCon[0]=-2.0;
+     denCon[1]=(Ts-2);
+     denCon[0]=+Ts+2;
      //denCon[0]=-2*Ts;
-  /*
+     SystemBlock control(numCon,denCon);
+
+
    std::vector<double> numCon(3,0);
     numCon[2]=(3*Ts*Ts+10*Ts+12);
     numCon[1]=(6*Ts*Ts-24);
@@ -60,11 +64,11 @@ int main()
     numCon[0]=5;
     std::vector<double> denCon(1,0);
     denCon[0]=1;
- */
+
 
     //instantiate object
     SystemBlock control(numCon,denCon);
-
+*/
 
     //SystemBlock Motor
     //numerator parameters
@@ -104,14 +108,19 @@ int main()
 
     }
 
-    do
-    //for(int i=0;i<110;i++)
+    PIDBlock pidControl(5,2,2,Ts);
+
+
+    //do
+    for(int i=0;i<200;i++)
     {
         //fmPos=motorStates.back();
        actualError=fmTarget-fmPos;
         //std::cout << "error: " << actualError << ", fmPos: " << fmPos << std::endl;
 
-        actualControl=control.OutputUpdate(actualError);
+        //actualControl=control.OutputUpdate(actualError);
+       actualControl=pidControl.UpdateControl(actualError);
+
         fmPos=motor.OutputUpdate(actualControl);
         //fmPos+=dPos;
 
@@ -121,12 +130,49 @@ int main()
         //e.data.push_back(actualError);
 
         std::cout << "fmPos: " << fmPos << std::endl;
- /*
-        std::cout << "motor.OutputUpdate: " << motor.OutputUpdate(fmTarget) << std::endl;
+/*        //std::cout << "pid: " << pidControl.UpdateControl(actualError) << std::endl;
+
+
+        std::cout << "motor.OutputUpdate: " << motor.OutputUpdate(-10) << std::endl;
 */
 
-    }while(actualError>0.1);
+    }//while(actualError>0.1);
 
+    fmTarget=0;
+
+    std::vector<double> numCon(2,0);
+     numCon[1]=-(2*Ts-2);
+     numCon[0]=-2*Ts-2;
+     //numCon[0]=3*Ts*Ts-10*Ts+12;
+
+     //denominator parameters
+     std::vector<double> denCon(2,0);
+     denCon[1]=(Ts+2);
+     denCon[0]=+Ts-2;
+     //denCon[0]=-2*Ts;
+     SystemBlock control(numCon,denCon);
+
+    for(int i=0;i<400;i++)
+    {
+        //fmPos=motorStates.back();
+       actualError=fmTarget-fmPos;
+        //std::cout << "error: " << actualError << ", fmPos: " << fmPos << std::endl;
+
+        //actualControl=control.OutputUpdate(actualError);
+       actualControl=control.OutputUpdate(actualError);
+
+        fmPos=motor.OutputUpdate(actualControl);
+        //fmPos+=dPos;
+
+        //std::cout << "actualControl: " << actualControl << ", dPos: " << dPos << std::endl;
+        //motorStates.push_back(fmPos);
+        //e.data.erase(e.data.begin());
+        //e.data.push_back(actualError);
+
+        std::cout << "fmPos2: " << fmPos << std::endl;
+    }
+
+    //Plotter result;
 
 /*
 
