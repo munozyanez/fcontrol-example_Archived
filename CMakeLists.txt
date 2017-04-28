@@ -1,23 +1,34 @@
 project(fcontrol-example)
 
 cmake_minimum_required(VERSION 2.8)
-aux_source_directory(./src SRC_LIST)
+
+aux_source_directory(src SRC_LIST)
+aux_source_directory(examples SRC_LIST)
 
 
-#fcontrol library
-add_subdirectory(${PROJECT_SOURCE_DIR}/lib/fcontrol)
-set(FCONTROL_LIBRARIES ${FCONTROL_LIBRARY} )
-set(FCONTROL_INCLUDE_DIRS ${FCONTROL_INCLUDE_DIR} )
-INCLUDE_DIRECTORIES(${FCONTROL_INCLUDE_DIRS})
-
-find_package(libplot)
+add_subdirectory(lib)
 
 
 
-add_executable(${PROJECT_NAME} ${SRC_LIST})
+
+#find_package(libplot)
+
+INCLUDE_DIRECTORIES(${SUBDIR_INCLUDE_DIRECTORIES})
+
+foreach( testsourcefile ${SRC_LIST} )
+    # I used a simple string replace, to cut off .cpp.
+    string( REGEX REPLACE "[A-z]+[/]" "" testname ${testsourcefile} )
+    string( REPLACE ".cpp" "" testname ${testname} )
+
+    add_executable( ${testname} ${testsourcefile} )
+    message ("Including executable: " ${testname})
+    # Make sure YourLib is linked to each app
+    target_link_libraries( ${testname} fcontrol ${SUBDIR_LINK_NAMES} )
+endforeach( testsourcefile ${APP_SOURCES} )
+
 
 #link with libs
-target_link_libraries( ${PROJECT_NAME} fcontrol)
+#target_link_libraries( ${PROJECT_NAME} fcontrol ${SUBDIR_LINK_NAMES})
 
 
 ##functions
@@ -31,4 +42,4 @@ function(echo_all_cmake_variable_values)
 endfunction()
 
 
-#echo_all_cmake_variable_values()
+echo_all_cmake_variable_values()
