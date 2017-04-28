@@ -24,7 +24,6 @@ long IPlot::Plot(std::vector<double> datax, std::vector<double> datay, double sc
         //plt.fpoint(datax[i]/scalex,datay[i]/scaley);
         plt.fmove(datax[i]/scalex,datay[i]/scaley);
         plt.fcircle(datax[i]/scalex,datay[i]/scaley,std::max(scalex,scaley)/10000.);
-        std::cout << "fmPos_plot: " << datax[i] << std::endl;
 
         //plt.endpath();
         //plt.flushpl();
