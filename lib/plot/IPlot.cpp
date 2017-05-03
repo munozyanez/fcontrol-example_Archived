@@ -19,11 +19,12 @@ long IPlot::Plot(std::vector<double> datax, std::vector<double> datay, double sc
 
 
 
-    for (ulong i=0; i<datax.size(); i++)
+    for (ulong i=1; i<datax.size(); i++)
     {
         //plt.fpoint(datax[i]/scalex,datay[i]/scaley);
         plt.fmove(datax[i]/scalex,datay[i]/scaley);
-        plt.fcircle(datax[i]/scalex,datay[i]/scaley,std::max(scalex,scaley)/10000.);
+        plt.fline(datax[i-1]/scalex,datay[i-1]/scaley,datax[i]/scalex,datay[i]/scaley);
+        //plt.fcircle(datax[i]/scalex,datay[i]/scaley,std::max(scalex,scaley)/10000.);
 
         //plt.endpath();
         //plt.flushpl();

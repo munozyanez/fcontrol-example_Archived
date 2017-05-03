@@ -25,7 +25,7 @@ int main()
     SystemBlock motor(num,den);
 
 
-    PIDBlock pidControl(5,2,2,Ts);
+    PIDBlock pidControl(5,0.2,0.2,Ts);
 
 
     std::vector<double> numCon(2,0);
@@ -55,7 +55,7 @@ int main()
         //std::cout << "error: " << actualError << ", fmPos: " << fmPos << std::endl;
 
         //actualControl=control.OutputUpdate(actualError);
-       actualControl=control.OutputUpdate(actualError);
+       actualControl=pidControl.OutputUpdate(actualError);
 
         fmPos=motor.OutputUpdate(actualControl);
         //fmPos+=dPos;
@@ -67,11 +67,11 @@ int main()
         motorStates.push_back(fmPos);
         times.push_back(i*Ts);
 
-        std::cout << "fmPos2: " << fmPos << std::endl;
+        std::cout << "fmPos: " << fmPos << std::endl;
     }
 
     IPlot pVt;
-    pVt.Plot(times, motorStates, 10, -100);
+    pVt.Plot(times, motorStates, 10, 15);
 
     return 0;
 }
