@@ -44,8 +44,9 @@ int main()
        actualControl=pidControl.OutputUpdate(actualError);
 
         //fmPos=motor.OutputUpdate(actualControl);
-       motor.OutputUpdate(actualControl);
-//        motor >> fmPos;
+       //motor.OutputUpdate(actualControl);
+        pidControl >>  motor ;
+        motor >> fmPos;
 
         //std::cout << "actualControl: " << actualControl << ", dPos: " << dPos << std::endl;
         //motorStates.push_back(fmPos);
