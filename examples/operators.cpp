@@ -23,15 +23,15 @@ int main()
     den[0]=-2*Ts+4;
     //instantiate object
     SystemBlock motor(
-                std::vector<double>{ka*Ts,ka*Ts},
-                std::vector<double>{Ts-2,Ts+2}
+                std::vector<double> {ka*Ts,ka*Ts},
+                std::vector<double> {Ts-2,Ts+2}
                 );
 
 
     //instantiate object
     SystemBlock encoder(
-                std::vector<double>{Ts,Ts},
-                std::vector<double>{-2,+2}
+                std::vector<double> {Ts,Ts},
+                std::vector<double> {-2,+2}
                 );
 
     PIDBlock pidControl(10,1,10,Ts);
@@ -56,9 +56,9 @@ int main()
         //fmPos=motor.OutputUpdate(actualControl);
        //motor.OutputUpdate(actualControl);
 
-       actualControl >= motor;
-       motor >> encoder;
-       //encoder << motor <<= actualControl;
+//       actualControl >= motor;
+//       motor >> encoder;
+       actualControl > motor >  encoder;
        //motor.OutputUpdate(pidControl.GetState());
        fmPos = encoder.GetState();
 
