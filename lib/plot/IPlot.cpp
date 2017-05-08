@@ -5,6 +5,30 @@ IPlot::IPlot()
 
 }
 
+IPlot::IPlot(double sampleTime)
+{
+    InitPlot();
+    Ts=sampleTime;
+}
+
+long IPlot::pushBack(double new_value)
+{
+    y.push_back(new_value);
+    x.push_back(x.back()+Ts);
+
+    return 0;
+
+}
+
+long IPlot::Plot()
+{
+
+    double scx,scy;
+    scx = *max_element(x.begin(),x.end());
+    scy = *max_element(y.begin(),y.end());
+    Plot(x,y,1.5*scx,1.5*scy);
+}
+
 long IPlot::Plot(std::vector<double> datax, std::vector<double> datay, double scalex, double scaley)
 {
     PlotterParams newParams;
@@ -12,7 +36,7 @@ long IPlot::Plot(std::vector<double> datax, std::vector<double> datay, double sc
     newParams.setplparam("BITMAPSIZE", (char *)"600x600");
 
     XPlotter plt(newParams);
-    plt.fspace(-100, 100, -600, 600);
+    plt.fspace(-scalex, scalex, -scaley, scaley);
     //plt.fscale(2,2);
     plt.openpl();
     plt.pencolorname("blue");
@@ -40,28 +64,13 @@ long IPlot::Plot(std::vector<double> datax, std::vector<double> datay, double sc
 
 long IPlot::PlotAndSave(std::vector<double> datax, std::vector<double> datay, double scalex, double scaley, std::string filename)
 {
-    PlotterParams newParams;
-    newParams.setplparam("PAGESIZE", (char *)"a4");
-    newParams.setplparam("BITMAPSIZE", (char *)"600x600");
-
-    XPlotter plt(newParams);
-    plt.fspace(-100, 100, -600, 600);
-    //plt.fscale(2,2);
-    plt.openpl();
-    plt.pencolorname("blue");
-
 
     std::fstream datafile;
     datafile.open (filename, std::fstream::out);
 
     for (ulong i=1; i<datax.size(); i++)
     {
-        //plt.fpoint(datax[i]/scalex,datay[i]/scaley);
-        plt.line(datax[i-1],datay[i-1],datax[i],datay[i]);
-        plt.fmove(datax[i]/scalex,datay[i]/scaley);
-        plt.fcircle(datax[i]/scalex,datay[i]/scaley,std::max(scalex,scaley)/10000.);
-        //plt.endpath();
-        //plt.flushpl();
+
 
         //fprintf (gdata, "%f - %f - %f - %f \n",Ts*i,vel,actualVel,jointPos);
         datafile << datax[i] << " - "
@@ -73,11 +82,20 @@ long IPlot::PlotAndSave(std::vector<double> datax, std::vector<double> datay, do
     }
 
 
+    Plot(datax,datay,scalex,scaley);
 
-    plt.endpath();
-    plt.flushpl();
-    plt.closepl();
     datafile.close();
 
+
+}
+
+long IPlot::InitPlot()
+{
+    Ts=0.01;
+    x.clear();
+    x.push_back(0.);
+    y.clear();
+    y.push_back(0.);
+    return 0;
 
 }
