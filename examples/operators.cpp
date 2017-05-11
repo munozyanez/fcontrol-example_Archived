@@ -12,7 +12,7 @@ int main()
     double ka=1.1;
 
     //plotters
-    IPlot pt(Ts),vt(Ts);
+    IPlot ptPlot(Ts),vtPlot(Ts);
 
     //instantiate object motor
     SystemBlock motor(
@@ -27,10 +27,10 @@ int main()
                 std::vector<double> {-2,+2}
                 );
 
-    PIDBlock pidControl(10,1,3,Ts);
+    PIDBlock pidControl(1,0,0,Ts);
 
 
-    motor.SetSaturation(-5,5); //max motor vel
+    //motor.SetSaturation(-10,10); //max motor vel
 
 
 
@@ -43,7 +43,7 @@ int main()
     for(int i=0;i<400;i++)
     {
        actualError=fmTarget-fmPos;
-        //std::cout << "error: " << actualError << ", fmPos: " << fmPos << std::endl;
+        std::cout << "error: " << actualError << ", fmPos: " << fmPos << std::endl;
 
        //actualControl=pidControl.OutputUpdate(actualError);
 
@@ -53,16 +53,16 @@ int main()
        fmPos = encoder.GetState();
 
 
-       vt.pushBack(motor.GetState());
-       pt.pushBack(fmPos);
+       vtPlot.pushBack(motor.GetState());
+       ptPlot.pushBack(fmPos);
         motorStates.push_back(fmPos);
         times.push_back(i*Ts);
 
         std::cout << "fmPos: " << fmPos << std::endl;
     }
 
-    vt.Plot();
-    pt.Plot();
+    vtPlot.Plot();
+    ptPlot.Plot();
 
 
 
