@@ -2,7 +2,8 @@
 
 IPlot::IPlot()
 {
-
+    InitPlot();
+    Ts=0.01;
 }
 
 IPlot::IPlot(double sampleTime)
@@ -27,6 +28,7 @@ long IPlot::Plot()
     scx = *max_element(x.begin(),x.end());
     scy = *max_element(y.begin(),y.end());
     Plot(x,y,1.5*scx,1.5*scy);
+    return 0;
 }
 
 long IPlot::Plot(std::vector<double> datax, std::vector<double> datay, double scalex, double scaley)
@@ -59,6 +61,7 @@ long IPlot::Plot(std::vector<double> datax, std::vector<double> datay, double sc
     plt.flushpl();
     plt.closepl();
 
+    return 0;
 
 }
 
@@ -86,6 +89,7 @@ long IPlot::PlotAndSave(std::vector<double> datax, std::vector<double> datay, do
 
     datafile.close();
 
+    return 0;
 
 }
 
