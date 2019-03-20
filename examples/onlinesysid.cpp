@@ -10,7 +10,8 @@ using namespace std;
 int main()
 {
 
-    OnlineSystemIdentification Gz;
+    int numOrder=1,denOrder=2;
+    OnlineSystemIdentification Gz(numOrder,denOrder);
 
     IPlot p;
 
@@ -22,7 +23,17 @@ int main()
 
     }
 
-    p.Plot();
+    vector<double> num(numOrder),den(denOrder);
+    Gz.GetZTransferFunction(num,den);
+    for (int i=0; i<num.size(); i++) cout << num[i] << ", ";
+    cout << endl;
+    for (int i=0; i<den.size(); i++) cout << den[i] << ", ";
+    cout << endl;
+
+//    vector<double> params = Gz.GetParamsVector();
+//    for (int i=0; i<params.size(); i++) cout << params[i] << endl;
+
+//    p.Plot();
 
     return 0;
 }
