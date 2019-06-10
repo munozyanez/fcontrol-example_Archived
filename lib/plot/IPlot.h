@@ -12,6 +12,7 @@
 //#include <plplot/plplot.h>
 //#include <plplot/plstream.h>
 #define NSIZE    101
+#define STRINGSIZE    255
 
 class IPlot
 {
@@ -32,6 +33,8 @@ private:
 
 
     double Ts;
+    char xLabel[STRINGSIZE];
+    char yLabel[STRINGSIZE];
 
     std::vector<double> x,y;
 

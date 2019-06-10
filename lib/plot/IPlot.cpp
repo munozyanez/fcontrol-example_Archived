@@ -43,6 +43,10 @@ long IPlot::Plot(std::vector<double> datax, std::vector<double> datay, double sc
     plt.openpl();
     plt.pencolorname("blue");
 
+//    plt.move(0.5*scalex,0.5*scaley);
+    sprintf (yLabel, "yMax: %f ", scaley);
+//    cout << scalex;
+    plt.label(yLabel);
 
 
     for (ulong i=1; i<datax.size(); i++)

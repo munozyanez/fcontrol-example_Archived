@@ -10,18 +10,24 @@ using namespace std;
 int main()
 {
 
-    int numOrder=1,denOrder=2;
+    SystemBlock sys(1,1,-199,201);
+
+    int numOrder=2,denOrder=2;
     OnlineSystemIdentification Gz(numOrder,denOrder);
 
     IPlot p;
     double dts=0.01;
+    double in,out;
 
-    for (double t=0; t<2; t+=dts)
+    for (double t=0; t<10; t+=dts)
 
     {
-        cout << Gz.UpdateSystem(1,2);
-        p.pushBack(0.1);
+        in=1*(rand() % 10 + 1)-5;
+        out=in > sys;
+        cout << Gz.UpdateSystem(in,out);
+        p.pushBack(out);
         Gz.PrintZTransferFunction(dts);
+        Gz.PrintParamsVector();
 
     }
 
@@ -31,7 +37,7 @@ int main()
 //    vector<double> params = Gz.GetParamsVector();
 //    for (int i=0; i<params.size(); i++) cout << params[i] << endl;
 
-//    p.Plot();
+    p.Plot();
 
     return 0;
 }
