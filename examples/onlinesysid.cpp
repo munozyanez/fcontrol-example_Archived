@@ -14,21 +14,19 @@ int main()
     OnlineSystemIdentification Gz(numOrder,denOrder);
 
     IPlot p;
+    double dts=0.01;
 
-    for (double t=0; t<2; t+=0.01)
+    for (double t=0; t<2; t+=dts)
 
     {
-        Gz.UpdateSystem(1,2);
+        cout << Gz.UpdateSystem(1,2);
         p.pushBack(0.1);
+        Gz.PrintZTransferFunction(dts);
 
     }
 
     vector<double> num(numOrder),den(denOrder);
     Gz.GetZTransferFunction(num,den);
-    for (int i=0; i<num.size(); i++) cout << num[i] << ", ";
-    cout << endl;
-    for (int i=0; i<den.size(); i++) cout << den[i] << ", ";
-    cout << endl;
 
 //    vector<double> params = Gz.GetParamsVector();
 //    for (int i=0; i<params.size(); i++) cout << params[i] << endl;
