@@ -73,7 +73,7 @@ long IPlot::PlotAndSave(std::vector<double> datax, std::vector<double> datay, do
 {
 
     std::fstream datafile;
-    datafile.open (filename, std::fstream::out);
+    datafile.open (filename.c_str(), std::fstream::out);
 
     for (ulong i=1; i<datax.size(); i++)
     {
