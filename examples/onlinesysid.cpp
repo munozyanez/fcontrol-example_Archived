@@ -12,9 +12,10 @@ int main()
 
 
 
-    SystemBlock sys(vector<double>{1,1,1},vector<double>{0.5,-0.9,1});
+//    SystemBlock sys(vector<double>{1,1,1},vector<double>{0.5,-0.9,1});
+    SystemBlock sys(vector<double>{1,1},vector<double>{-199,201});
 
-    int numOrder=2,denOrder=2;
+    int numOrder=1,denOrder=1;
     OnlineSystemIdentification Gz(numOrder,denOrder);
 
     IPlot real,id;
@@ -28,11 +29,13 @@ int main()
         out=in > sys;
         Gz.UpdateSystem(in,out);
         real.pushBack(out);
-        //Gz.PrintZTransferFunction(dts);
         //Gz.PrintParamsVector();
 
     }
     real.Plot();
+
+    Gz.PrintZTransferFunction(dts);
+
 
     vector<double> num(numOrder+1),den(denOrder+1);
     Gz.GetZTransferFunction(num,den);
