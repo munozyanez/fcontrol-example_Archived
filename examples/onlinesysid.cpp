@@ -15,17 +15,17 @@ int main()
 //    SystemBlock sys(vector<double>{1,1,1},vector<double>{0.5,-0.9,1});
     SystemBlock sys(vector<double>{1,1},vector<double>{-199,201});
 
-    int numOrder=1,denOrder=1;
+    int numOrder=sys.GetNumOrder(),denOrder=sys.GetDenOrder();
     OnlineSystemIdentification Gz(numOrder,denOrder);
 
     IPlot real,id;
     double dts=0.01;
     double in,out;
 
-    for (double t=0; t<10; t+=dts)
+    for (double t=0; t<20; t+=dts)
 
     {
-        in=1;//*(rand() % 10 + 1)-5;
+        in=1*(rand() % 10 + 1)-5;
         out=in > sys;
         Gz.UpdateSystem(in,out);
         real.pushBack(out);
