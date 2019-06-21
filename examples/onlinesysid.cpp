@@ -13,7 +13,7 @@ int main()
 
 
 //    SystemBlock sys(vector<double>{1,1,1},vector<double>{0.5,-0.9,1});
-    SystemBlock sys(vector<double>{1,1},vector<double>{-199,201});
+    SystemBlock sys(vector<double>{1},vector<double>{-199,201});
 
     int numOrder=sys.GetNumOrder(),denOrder=sys.GetDenOrder();
     OnlineSystemIdentification Gz(numOrder,denOrder);
@@ -25,7 +25,7 @@ int main()
     for (double t=0; t<20; t+=dts)
 
     {
-        in=10+0.05*(rand() % 10 + 1)-5;
+        in=1+(1*(rand() % 10 + 1)-5);
         out=in > sys;
         Gz.UpdateSystem(in,out);
         real.pushBack(out);
