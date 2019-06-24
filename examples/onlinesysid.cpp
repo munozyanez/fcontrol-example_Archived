@@ -25,7 +25,7 @@ int main()
     for (double t=0; t<20; t+=dts)
 
     {
-        in=1+(1*(rand() % 10 + 1)-5);
+        in=1+0.01*((rand() % 10 + 1)-5);
         out=in > sys;
         Gz.UpdateSystem(in,out);
         real.pushBack(out);
