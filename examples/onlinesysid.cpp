@@ -26,7 +26,7 @@ int main()
     for (double t=0; t<tmax; t+=dts)
 
     {
-        in=1+0.001*((rand() % 10 + 1)-5); //u_{i-1}
+        in=1+0.01*((rand() % 10 + 1)-5); //u_{i-1}
         out=in > sys;//y_{i}
 
         Gz.UpdateSystem(in,out);
