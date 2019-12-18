@@ -1,13 +1,13 @@
 # - Try to find lib
 # Once done this will define
-#  LIB_FOUND - System has libgait
-#  LIB_INCLUDE_DIRS - The libgait include directories
-#  LIB_LIBRARIES - The libraries needed to use libgait
+#  LIB_FOUND - System has lib installed
+#  LIB_INCLUDE_DIRS - The include directories
+#  LIB_LIBRARIES - The files needed to use library
 
 #Default location is /usr
 set(libName "PLOTUTILS")
 set(SEARCH_PATHS /usr)
-message(STATUS "Looking for local lib in: [${PLOTUTILS_LOCATION}].")
+message(STATUS "Looking for ${libName} lib in: [${SEARCH_PATHS}].")
 
 find_path(PLOTUTILS_INCLUDE_DIR plotter.h
     PATHS "${SEARCH_PATHS}/include/"

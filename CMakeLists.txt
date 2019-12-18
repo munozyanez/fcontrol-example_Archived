@@ -27,7 +27,7 @@ foreach( testsourcefile ${SRC_LIST} )
     add_executable( ${testname} ${testsourcefile} )
     message ("Including executable: " ${testname})
     # Make sure YourLib is linked to each app
-    target_link_libraries( ${testname} fcontrol ${SUBDIR_LINK_NAMES} )
+    target_link_libraries( ${testname} ${SUBDIR_LINK_NAMES} )
 endforeach( testsourcefile ${APP_SOURCES} )
 
 
@@ -46,4 +46,4 @@ function(echo_all_cmake_variable_values)
 endfunction()
 
 
-echo_all_cmake_variable_values()
+#echo_all_cmake_variable_values()
