@@ -17,9 +17,9 @@ int main()
     for (int i=0; i<10; i++)
     {
         1 > f1;
-        cout << "State: " << f1.getState() << endl;
+        cout << "State: " << f1.GetState() << endl;
 
     }
-    cout << "Final State: " << f1.getState() << endl;
+    cout << "Final State: " << f1.GetState() << endl;
     return 0;
 }
