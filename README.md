@@ -1,7 +1,7 @@
 # f-control Example
 
 # How to use
-Download prject and run:
+Download project and run:
 ```
 cd fcontrol-example
 ./script/bootstrap
