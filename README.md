@@ -1,7 +1,14 @@
 # f-control Example
 
 # How to use
+Download prject and run:
+```
+cd fcontrol-example
+./script/bootstrap
+```
+Then use your favorite CMake deployment system.
 
+# Dependencies
 The example needs libplot-dev in order to show graphs. 
 You can install under a debian based linux with:
 ```
