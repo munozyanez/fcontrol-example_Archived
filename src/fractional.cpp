@@ -12,7 +12,8 @@ int main()
 
 
 //    FractionalController1DOF f1(-0.5,0.01);
-    FPDBlock f1(1,1,-0.5,0.01);
+    FPDBlock f1(0,1,-1.1,1);
+    PIDBlock f2(0,1,0,1);
 
     for (int i=0; i<10; i++)
     {
