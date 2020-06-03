@@ -25,5 +25,20 @@ int main()
 
     tuner.TuneIsom(sys,con);
 
+    con.PrintParameters();
+
+    //or gett params vector and update the controller
+
+    vector<double> conpar(3);
+    tuner.TuneIsom(sys,conpar);
+    con.ParameterUpdate(conpar);
+    con.PrintParameters();
+
+    //or manually cahnge them
+    conpar[2]=-0.6;
+    con.ParameterUpdate(conpar);
+    con.PrintParameters();
+
+
 
 }
