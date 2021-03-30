@@ -28,26 +28,14 @@ int main()
     PIDBlock pidControl(5,0.2,0.2,Ts);
 
 
-    std::vector<double> numCon(2,0);
-     numCon[1]=-(2*Ts-2);
-     numCon[0]=-2*Ts-2;
-     //numCon[0]=3*Ts*Ts-10*Ts+12;
-
-     //denominator parameters
-     std::vector<double> denCon(2,0);
-     denCon[1]=(Ts+2);
-     denCon[0]=+Ts-2;
-     //denCon[0]=-2*Ts;
-     SystemBlock control(numCon,denCon);
-
-
 
      //control a fake motor
-     double fmPos,dPos;
+     double fmPos=0,dPos;
      std::vector<double> motorStates(0),times(0);
      double fmTarget=10;
      double actualError,actualControl;
 
+    //Control loop
     for(int i=0;i<400;i++)
     {
         //fmPos=motorStates.back();
