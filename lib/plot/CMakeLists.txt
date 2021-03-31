@@ -49,11 +49,12 @@ if("${CMAKE_PROJECT_NAME}" STREQUAL "${PROJECT_NAME}")
 #Set Library variables if subdirectory (called from add_subdirectory() )
 else("${CMAKE_PROJECT_NAME}" STREQUAL "${PROJECT_NAME}")
     message(STATUS "Configuring " ${PROJECT_NAME} " as sub-project in " ${CMAKE_CURRENT_SOURCE_DIR})
+    include_directories(${GNUPLOT_INCLUDE})
 
 endif()
 
 
-target_link_libraries( ${PROJECT_NAME} ${PLOTUTILS_LIBRARIES})
+target_link_libraries( ${PROJECT_NAME} ${PLOTUTILS_LIBRARIES} ${GNUPLOT_LIBRARIES})
 
 
 

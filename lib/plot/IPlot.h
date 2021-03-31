@@ -5,20 +5,47 @@
 #include <vector>
 #include <plotter.h>
 #include <plot.h>
+#include <stdio.h>
 #include <fstream>      // std::fstream
 #include <algorithm>    // std::min_element, std::max_element
 
 #include <iostream>
+#include <sstream>
 //#include <plplot/plplot.h>
 //#include <plplot/plstream.h>
 #define NSIZE    101
 #define STRINGSIZE    255
 
+
+// Patch for Windows by Damien Loison
+#ifdef _WIN32
+#    include <windows.h>
+#    define GNUPLOT_PCLOSE _pclose
+#    define GNUPLOT_POPEN  _popen
+#    define GNUPLOT_FILENO _fileno
+#else
+#    define GNUPLOT_PCLOSE pclose
+#    define GNUPLOT_POPEN  popen
+#    define GNUPLOT_FILENO fileno
+#endif
+
+#ifdef _WIN32
+#    define GNUPLOT_ISNAN _isnan
+#else
+// cppreference.com says std::isnan is only for C++11.  However, this seems to work on Linux
+// and I am assuming that if isnan exists in math.h then std::isnan exists in cmath.
+#    define GNUPLOT_ISNAN std::isnan
+#endif
+
+using namespace std;
+
 class IPlot
 {
 public:
-    IPlot();
-    IPlot(double sampleTime);
+    IPlot(double sampleTime = 0.01, string new_xLabel = "", string new_yLabel = "", string new_title = "");
+    ~IPlot();
+
+    long SetParameters(string new_parameters);
 
     long pushBack(double new_value);
 
@@ -33,13 +60,22 @@ private:
 
 
     double Ts;
-    char xLabel[STRINGSIZE];
-    char yLabel[STRINGSIZE];
+//    char xLabel[STRINGSIZE];
+//    char yLabel[STRINGSIZE];
+    string xLabel;
+    string yLabel;
+    string title;
 
     std::vector<double> x,y;
 
+    FILE* figure;
+//    FILE* figdata;
+    stringstream figdata;
+    string strdata;
 
-    long InitPlot();
+    string parameters;
+
+
 
     //PlotterParams puPlotParams;
 };

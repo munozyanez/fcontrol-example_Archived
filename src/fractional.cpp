@@ -3,7 +3,8 @@
 #include "fcontrol.h"
 #include <math.h>
 
-#include <plotter.h>
+//#include <plotter.h>
+#include "IPlot.h"
 
 using namespace std;
 

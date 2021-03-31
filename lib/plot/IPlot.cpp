@@ -1,15 +1,32 @@
 #include "IPlot.h"
 
-IPlot::IPlot()
+
+IPlot::IPlot(double sampleTime, string new_xLabel, string new_yLabel, string new_title)
 {
-    InitPlot();
-    Ts=0.01;
+    Ts=sampleTime;
+    x.clear();
+    x.push_back(0.);
+    y.clear();
+    y.push_back(0.);
+    xLabel = "'"+new_xLabel+"'"; //labels in gnuplot need the ' '.
+    yLabel = "'"+new_yLabel+"'"; //labels in gnuplot need the ' '.
+    title = "'"+new_title+"'"; //labels in gnuplot need the ' '.
+    figure = GNUPLOT_POPEN("gnuplot -persistent", "w");
+//    figdata = GNUPLOT_POPEN("gnuplot", "w");
+
 }
 
-IPlot::IPlot(double sampleTime)
+IPlot::~IPlot()
 {
-    InitPlot();
-    Ts=sampleTime;
+    GNUPLOT_PCLOSE(figure);
+
+}
+
+long IPlot::SetParameters(string new_parameters)
+{
+    parameters = new_parameters;
+
+    return 0;
 }
 
 long IPlot::pushBack(double new_value)
@@ -28,9 +45,11 @@ long IPlot::Plot()
     scx = *max_element(x.begin(),x.end());
     scy = *max_element(y.begin(),y.end());
     Plot(x,y,1.5*scx,1.5*scy);
+
+//    fprintf(figure,"%s\n","plot exp(-x**2 / 2)");
     return 0;
 }
-
+/* old version using plotter
 long IPlot::Plot(std::vector<double> datax, std::vector<double> datay, double scalex, double scaley)
 {
     PlotterParams newParams;
@@ -59,7 +78,9 @@ long IPlot::Plot(std::vector<double> datax, std::vector<double> datay, double sc
     }
 
     //    plt.move(0.5*scalex,0.5*scaley);
-        sprintf (yLabel, "   yMax: %f ", scaley);
+        sprintf (yLabel, "  yMax: %f ", scaley);
+        sprintf (xLabel, " 'x y Label' ");
+
     //    cout << scalex;
         plt.label(yLabel);
 
@@ -67,9 +88,39 @@ long IPlot::Plot(std::vector<double> datax, std::vector<double> datay, double sc
     plt.flushpl();
     plt.closepl();
 
+
+    return 0;
+
+}*/
+
+long IPlot::Plot(std::vector<double> datax, std::vector<double> datay, double scalex, double scaley)
+{
+
+
+//        sprintf (yLabel, "  yMax: %f ", scaley);
+//        sprintf (xLabel, " 'x y Label' ");
+
+
+    fprintf(figure,"%s \n","set grid");
+
+    fprintf(figure,"%s%s\n %s%s\n","set ylabel ", yLabel.c_str(), "set xlabel ", xLabel.c_str() );
+    fprintf(figure,"%s%s\n ","set title ", title.c_str() );
+
+    fprintf(figure,"%s \n",parameters.c_str());
+//    fprintf(figure,"%s \n","set style line 1 linewidth 30");
+
+    fprintf(figure,"%s\n","plot '-' lt rgb 'blue' with lines");
+    for (int i = 0; i < datay.size(); ++i)
+    {
+        fprintf(figure,"%f %f \n",datax[i],datay[i]);
+    }
+    fprintf(figure,"%s\n","EOF");
+
+
     return 0;
 
 }
+
 
 long IPlot::PlotAndSave(std::vector<double> datax, std::vector<double> datay, double scalex, double scaley, std::string filename)
 {
@@ -99,13 +150,3 @@ long IPlot::PlotAndSave(std::vector<double> datax, std::vector<double> datay, do
 
 }
 
-long IPlot::InitPlot()
-{
-    Ts=0.01;
-    x.clear();
-    x.push_back(0.);
-    y.clear();
-    y.push_back(0.);
-    return 0;
-
-}

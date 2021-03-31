@@ -14,9 +14,6 @@ add_subdirectory(lib)
 
 
 
-
-#find_package(libplot)
-
 INCLUDE_DIRECTORIES(${SUBDIR_INCLUDE_DIRECTORIES})
 
 foreach( testsourcefile ${SRC_LIST} )
@@ -36,14 +33,14 @@ endforeach( testsourcefile ${APP_SOURCES} )
 
 
 ##functions
-function(echo_all_cmake_variable_values)
-  message(STATUS "")
-  get_cmake_property(vs VARIABLES)
-  foreach(v ${vs})
-    message(STATUS "${v}='${${v}}'")
-  endforeach(v)
-  message(STATUS "")
-endfunction()
+#function(echo_all_cmake_variable_values)
+#  message(STATUS "")
+#  get_cmake_property(vs VARIABLES)
+#  foreach(v ${vs})
+#    message(STATUS "${v}='${${v}}'")
+#  endforeach(v)
+#  message(STATUS "")
+#endfunction()
 
 
 #echo_all_cmake_variable_values()

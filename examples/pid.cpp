@@ -2,7 +2,7 @@
 #include "fcontrol.h"
 #include <math.h>
 
-#include <IPlot.h>
+#include "IPlot.h"
 
 int main()
 {
@@ -25,7 +25,7 @@ int main()
     SystemBlock motor(num,den);
 
 
-    PIDBlock pidControl(5,0.2,0.2,Ts);
+    PIDBlock pidControl(5,0,0,Ts);
 
 
 
@@ -58,7 +58,7 @@ int main()
         std::cout << "fmPos: " << fmPos << std::endl;
     }
 
-    IPlot pVt;
+    IPlot pVt(Ts,"Time (s)","Theta (rad)");
     pVt.Plot(times, motorStates, 10, 15);
 
     return 0;
