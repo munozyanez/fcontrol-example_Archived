@@ -25,8 +25,13 @@ int main()
     SystemBlock motor(num,den);
 
 
-    PIDBlock pidControl(5,0,0,Ts);
+    PIDBlock pidControl(1,1,0,Ts);
+    pidControl.SetSaturation(-5,5);
+    pidControl.AntiWindup(-5,5);
 
+    IPlot cs(Ts, "Control signal vs time ", "Time (s)", "Control signal ");
+    IPlot pVt(Ts,"Position vs time ", "Time (s)", "Position signal (rad) ");
+    IPlot err(Ts,"Error vs time ", "Time (s)", "Error (rad)");
 
 
      //control a fake motor
@@ -36,7 +41,7 @@ int main()
      double actualError,actualControl;
 
     //Control loop
-    for(int i=0;i<400;i++)
+    for(int i=0;i<2000;i++)
     {
         //fmPos=motorStates.back();
        actualError=fmTarget-fmPos;
@@ -45,21 +50,28 @@ int main()
         //actualControl=control.OutputUpdate(actualError);
        actualControl=pidControl.OutputUpdate(actualError);
 
+
         fmPos=motor.OutputUpdate(actualControl);
         //fmPos+=dPos;
+
+        err.pushBack(actualError);
+        cs.pushBack(actualControl);
+        pVt.pushBack(fmPos);
 
         //std::cout << "actualControl: " << actualControl << ", dPos: " << dPos << std::endl;
         //motorStates.push_back(fmPos);
         //e.data.erase(e.data.begin());
         //e.data.push_back(actualError);
-        motorStates.push_back(fmPos);
-        times.push_back(i*Ts);
+//        motorStates.push_back(fmPos);
+//        times.push_back(i*Ts);
 
-        std::cout << "fmPos: " << fmPos << std::endl;
+//        std::cout << "fmPos: " << fmPos << std::endl;
     }
 
-    IPlot pVt(Ts,"Time (s)","Theta (rad)");
-    pVt.Plot(times, motorStates, 10, 15);
+    pVt.Plot();
+//    cs.Plot();
+//    err.Plot();
+
 
     return 0;
 }

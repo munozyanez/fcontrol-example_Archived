@@ -32,15 +32,15 @@ endforeach( testsourcefile ${APP_SOURCES} )
 #target_link_libraries( ${PROJECT_NAME} fcontrol ${SUBDIR_LINK_NAMES})
 
 
-##functions
-#function(echo_all_cmake_variable_values)
-#  message(STATUS "")
-#  get_cmake_property(vs VARIABLES)
-#  foreach(v ${vs})
-#    message(STATUS "${v}='${${v}}'")
-#  endforeach(v)
-#  message(STATUS "")
-#endfunction()
+#functions
+function(echo_all_cmake_variable_values)
+  message(STATUS "")
+  get_cmake_property(vs VARIABLES)
+  foreach(v ${vs})
+    message(STATUS "${v}='${${v}}'")
+  endforeach(v)
+  message(STATUS "")
+endfunction()
 
 
-#echo_all_cmake_variable_values()
+echo_all_cmake_variable_values()
