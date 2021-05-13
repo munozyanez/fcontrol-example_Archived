@@ -26,8 +26,8 @@ int main()
 
 
     PIDBlock pidControl(1,1,0,Ts);
-    pidControl.SetSaturation(-5,5);
-    pidControl.AntiWindup(-5,5);
+//    pidControl.SetSaturation(-5,5);
+//    pidControl.AntiWindup(-5,5);
 
     IPlot cs(Ts, "Control signal vs time ", "Time (s)", "Control signal ");
     IPlot pVt(Ts,"Position vs time ", "Time (s)", "Position signal (rad) ");
