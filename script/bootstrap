@@ -4,4 +4,8 @@ git submodule update --init --recursive
 git submodule init
 git submodule update
 git submodule foreach git checkout master
-git submodule set-branch --branch fcontrol opencl
+#git submodule set-branch --branch opencl lib/fcontrol
+cd ./lib/fcontrol
+git checkout opencl
+git pull
+cd ../..
