@@ -4,3 +4,5 @@
 [submodule "lib/i-plot"]
 	path = lib/i-plot
 	url = https://github.com/munozyanez/i-plot.git
+[submodule "opencl"]
+	branch = fcontrol
