@@ -2,6 +2,7 @@
 
 #include "fcontrol.h"
 #include <math.h>
+#include <chrono>
 
 //#include <plotter.h>
 #include "IPlot.h"
@@ -23,22 +24,28 @@ int main()
     vector<double> vfir=f1.GetVfir();
     IPlot firfig(vfir);
 
+    chrono::system_clock::time_point start = std::chrono::system_clock::now();
 
     double in=10, out=0;
-    for (int i=0; i<100; i++)
+    for (int i=0; i<1000; i++)
     {
 //        in=i*dts;
 
         out = in > f1;
-        infig.pushBack(in);
-        outfig.pushBack(out);
+//        infig.pushBack(in);
+//        outfig.pushBack(out);
 //        cout << "State: " << f1.GetState() << endl;
 
     }
 //    infig.Plot();
-    outfig.Plot();
-    firfig.Plot();
+//    outfig.Plot();
+//    firfig.Plot();
 //    cout << "Final State: " << f1.GetState() << endl;
+
+    chrono::system_clock::time_point finish = std::chrono::system_clock::now();
+    chrono::nanoseconds elapsedNanoseconds = finish.time_since_epoch() - start.time_since_epoch();
+    double tiempototal = elapsedNanoseconds.count();
+    cout << "Tiempo total: ms " << (tiempototal/1000000) << endl;
 
     return 0;
 }
