@@ -20,13 +20,15 @@ find_library(FCONTROL_LIBRARY NAMES ${NAME} lib${NAME}
 
 if(${FCONTROL_LIBRARY} STREQUAL "FCONTROL_LIBRARY-NOTFOUND")
     message(STATUS "${NAME} not installed.")
-else()
-    message(STATUS "${NAME} library found...")
     #deps
     #1-fftw
     #find_package(FFTW REQUIRED)
     #2-eigen
     find_package(Eigen3 REQUIRED NO_MODULE)
+
+else()
+    message(STATUS "${NAME} library found...")
+
     #message(STATUS "EIGEN: " ${EIGEN3_VERSION} " (system installed version)")
     #include_directories(${EIGEN3_INCLUDE_DIR})
     set (FCONTROL_FOUND TRUE)

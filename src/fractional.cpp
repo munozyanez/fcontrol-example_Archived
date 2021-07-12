@@ -19,7 +19,7 @@ int main()
 //    FPDBlock f1(0,1,-1.1,0.02);
 //    PIDBlock f2(0,1,0,0.02);
 
-    FractionalDerivative f1(0.5,dts);
+    FractionalDerivative f1(-0.5,dts);
 //    cout << f1.GetVfir()[1];
     vector<double> vfir=f1.GetVfir();
     IPlot firfig(vfir);
@@ -39,7 +39,7 @@ int main()
     }
 //    infig.Plot();
 //    outfig.Plot();
-//    firfig.Plot();
+    firfig.Plot();
 //    cout << "Final State: " << f1.GetState() << endl;
 
     chrono::system_clock::time_point finish = std::chrono::system_clock::now();
