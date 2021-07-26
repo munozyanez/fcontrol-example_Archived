@@ -19,7 +19,7 @@ int main()
 //    FPDBlock f1(0,1,-1.1,0.02);
 //    PIDBlock f2(0,1,0,0.02);
 
-    FractionalDerivative f1(-1.49,dts);
+    FractionalDerivative f1(1.5,dts);
 //    cout << f1.GetVfir()[1];
     vector<double> vfir=f1.GetVfir();
     IPlot firfig(vfir);
@@ -41,7 +41,6 @@ int main()
 //    outfig.Plot();
     firfig.Plot();
 //    cout << "Final State: " << f1.GetState() << endl;
-cout <<  lgamma(-1000.1) << endl;
     chrono::system_clock::time_point finish = std::chrono::system_clock::now();
     chrono::nanoseconds elapsedNanoseconds = finish.time_since_epoch() - start.time_since_epoch();
     double tiempototal = elapsedNanoseconds.count();
